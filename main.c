@@ -157,7 +157,7 @@ void printSredniaPrzemiotu(struct Student strukturaStudentow[], char przedmioty[
     printf("Podaj numer  przedmiotu: ");
     for (int i = 0; i < liczbaPrzedmiotow; i++)
     {
-        printf("%i: %s", i, przedmioty[i]);
+        printf("%i: %s\n", i, przedmioty[i]);
     }
 
     char c[2];
@@ -172,7 +172,7 @@ void printSredniaPrzemiotu(struct Student strukturaStudentow[], char przedmioty[
     printf("Srednia z przedmiotu: %s grupy to: %.2f", przedmioty[tempNumer], sredniaZPrzedmiotu);
 }
 
-void czyKontynuowacDzialanieProgramu(int czyKontynuowanie)
+void czyKontynuowacDzialanieProgramu(int *czyKontynuowanie)
 {
     printf("\nCzy chcesz kontynuowac (t/n)?\n");
     char odpUzytkownika;
@@ -180,11 +180,13 @@ void czyKontynuowacDzialanieProgramu(int czyKontynuowanie)
     scanf(" %c", &odpUzytkownika);
     if (odpUzytkownika == 't' || odpUzytkownika == 'T')
     {
-        czyKontynuowanie = 0;
+        *czyKontynuowanie = 0;
+        fflush(stdin);
     }
     else
     {
-        czyKontynuowanie = 1;
+        *czyKontynuowanie = 1;
+        fflush(stdin);
     }
 }
 
@@ -254,43 +256,44 @@ int main()
 
         char odpowiedzUzytkownika = '0';
         fflush(stdin);
-        scanf(" %c", &odpowiedzUzytkownika);
+        scanf(" %[0-9]c", &odpowiedzUzytkownika);
         switch (odpowiedzUzytkownika)
         {
         case '1':
             printStudentsWithGrades(strukturaStudentow, przedmioty);
-            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            czyKontynuowacDzialanieProgramu(&czyKontynuowac);
             break;
 
         case '2':
 
             printStudent(strukturaStudentow, przedmioty);
-            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            czyKontynuowacDzialanieProgramu(&czyKontynuowac);
             break;
 
         case '3':
 
             printStudentsWithTheirAverages(strukturaStudentow);
-            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            czyKontynuowacDzialanieProgramu(&czyKontynuowac);
             break;
 
         case '4':
 
             printSredniaGrupy(strukturaStudentow);
-            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            czyKontynuowacDzialanieProgramu(&czyKontynuowac);
             break;
 
         case '5':
 
             printSredniaPrzemiotu(strukturaStudentow, przedmioty);
-            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            czyKontynuowacDzialanieProgramu(&czyKontynuowac);
             break;
 
         case '6':
 
             wygenerowanieStudentow(proporcja, strukturaStudentow, imionaMeskie, nazwiskaMeskie, imionaZenskie,
                                    nazwiskaZenskie);
-            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            czyKontynuowacDzialanieProgramu(&czyKontynuowac);
+            break;
         case '0':
             printf("Koncze dzialanie aplikacji");
             return 0;
