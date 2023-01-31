@@ -58,6 +58,7 @@ void wygenerowanieStudentow(int proporcja, struct Student strukturaStudentow[], 
                             char nazwiskaMeskie[][maksymalnaDlugosc], char imionaZenskie[][maksymalnaDlugosc],
                             char nazwiskaZenskie[][maksymalnaDlugosc])
 {
+    printf("\nGenerowanie studentow...\n");
     int tablicaTymczasowa[liczbaImionINazwisk];
     losowanieImionINazwisk(tablicaTymczasowa);
 
