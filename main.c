@@ -161,7 +161,7 @@ void printSredniaPrzemiotu(struct Student strukturaStudentow[], char przedmioty[
         printf("%i: %s\n", i, przedmioty[i]);
     }
 
-    char c[2];
+    char c[1];
     scanf(" %s", &c);
     int tempNumer = atoi(c);
     float sredniaZPrzedmiotu = 0;
@@ -169,7 +169,7 @@ void printSredniaPrzemiotu(struct Student strukturaStudentow[], char przedmioty[
     {
         sredniaZPrzedmiotu += strukturaStudentow[i].oceny[tempNumer];
     }
-    sredniaZPrzedmiotu = sredniaZPrzedmiotu / (liczbaStudentow * liczbaStudentow);
+    sredniaZPrzedmiotu = sredniaZPrzedmiotu / (float)liczbaStudentow;
     printf("Srednia z przedmiotu: %s grupy to: %.2f", przedmioty[tempNumer], sredniaZPrzedmiotu);
 }
 
