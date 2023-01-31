@@ -1,6 +1,6 @@
 /*
  *Marek Kacprzak, WCY22IY3S1
- *Zajecia: 10.01.2023, rozliczenie: 17.01.2023 23:59
+ *Zajecia: 24.01.2023, rozliczenie: 31.01.2023 23:59
  *Temat: Zadanie 5 Oceny studentow
  */
 #include <stdio.h>
@@ -105,13 +105,13 @@ void printStudentsWithTheirAverages(struct Student strukturaStudentow[])
     for (int i = 0; i < liczbaStudentow; i++)
     {
         float sredniaOcenUcznia = 0;
-        printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", i, strukturaStudentow[i].imie,
+        printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", i + 1, strukturaStudentow[i].imie,
                strukturaStudentow[i].nazwisko);
         for (int j = 0; j < liczbaPrzedmiotow; j++)
         {
             sredniaOcenUcznia += strukturaStudentow[i].oceny[j];
         }
-        sredniaOcenUcznia = sredniaOcenUcznia / liczbaPrzedmiotow;
+        sredniaOcenUcznia = sredniaOcenUcznia / (float)liczbaPrzedmiotow;
         printf("Srednia ucznia: %.2f", sredniaOcenUcznia);
         printf("\n");
     }
@@ -128,7 +128,7 @@ void printStudent(struct Student strukturaStudentow[], char przedmioty[][maksyma
     {
         sredniaOcenUcznia += strukturaStudentow[i].oceny[i];
     }
-    sredniaOcenUcznia = sredniaOcenUcznia / liczbaPrzedmiotow;
+    sredniaOcenUcznia = sredniaOcenUcznia / (float)liczbaPrzedmiotow;
     printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", tempNumer,
            strukturaStudentow[tempNumer].imie, strukturaStudentow[tempNumer].nazwisko);
     for (int j = 0; j < liczbaPrzedmiotow; j++)
@@ -149,7 +149,7 @@ void printSredniaGrupy(struct Student strukturaStudentow[])
             sredniaGrupy += strukturaStudentow[i].oceny[j];
         }
     }
-    sredniaGrupy = sredniaGrupy / (liczbaStudentow * liczbaPrzedmiotow);
+    sredniaGrupy = sredniaGrupy / (float)(liczbaStudentow * liczbaPrzedmiotow);
     printf("Srednia calej grupy to: %.2f", sredniaGrupy);
 }
 
