@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include <stdbool.h>
+#include <ctype.h>
 
 #define liczbaStudentow 20  // stala liczba studentow
 #define liczbaPrzedmiotow 5 // stala liczba przedmiotow
@@ -90,7 +92,7 @@ void printStudentsWithGrades(struct Student strukturaStudentow[], char przedmiot
 {
     for (int i = 0; i < liczbaStudentow; i++)
     {
-        printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", i, strukturaStudentow[i].imie,
+        printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", i+1, strukturaStudentow[i].imie,
                strukturaStudentow[i].nazwisko);
         for (int j = 0; j < liczbaPrzedmiotow; j++)
         {
@@ -105,7 +107,7 @@ void printStudentsWithTheirAverages(struct Student strukturaStudentow[])
     for (int i = 0; i < liczbaStudentow; i++)
     {
         float sredniaOcenUcznia = 0;
-        printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", i + 1, strukturaStudentow[i].imie,
+        printf("%i: Imie i nazwisko: %-15.15s %-15.15s ", i + 1, strukturaStudentow[i].imie,
                strukturaStudentow[i].nazwisko);
         for (int j = 0; j < liczbaPrzedmiotow; j++)
         {
@@ -121,8 +123,11 @@ void printStudent(struct Student strukturaStudentow[], char przedmioty[][maksyma
 {
     printf("Podaj numer studenta: ");
     char c[2];
+    fflush(stdin);
     scanf(" %s", &c);
-    int tempNumer = atoi(c);
+    fflush(stdin);
+    int tempNumer = atoi(c)-1;
+
     float sredniaOcenUcznia = 0;
     for (int i = 0; i < liczbaPrzedmiotow; i++)
     {
@@ -155,15 +160,18 @@ void printSredniaGrupy(struct Student strukturaStudentow[])
 
 void printSredniaPrzemiotu(struct Student strukturaStudentow[], char przedmioty[][maksymalnaDlugosc])
 {
-    printf("Podaj numer  przedmiotu: ");
+    printf("Podaj numer  przedmiotu: \n");
     for (int i = 0; i < liczbaPrzedmiotow; i++)
     {
-        printf("%i: %s\n", i, przedmioty[i]);
+        printf("%i: %s\n", i+1, przedmioty[i]);
     }
+    printf("> ");
 
     char c[1];
+    fflush(stdin);
     scanf(" %s", &c);
-    int tempNumer = atoi(c);
+    fflush(stdin);
+    int tempNumer = atoi(c)-1;
     float sredniaZPrzedmiotu = 0;
     for (int i = 0; i < liczbaStudentow; i++)
     {
@@ -176,9 +184,11 @@ void printSredniaPrzemiotu(struct Student strukturaStudentow[], char przedmioty[
 void czyKontynuowacDzialanieProgramu(int *czyKontynuowanie)
 {
     printf("\nCzy chcesz kontynuowac (t/n)?\n");
+
     char odpUzytkownika;
     fflush(stdin);
     scanf(" %c", &odpUzytkownika);
+    fflush(stdin);
     if (odpUzytkownika == 't' || odpUzytkownika == 'T')
     {
         *czyKontynuowanie = 0;
@@ -188,6 +198,7 @@ void czyKontynuowacDzialanieProgramu(int *czyKontynuowanie)
     {
         *czyKontynuowanie = 1;
         fflush(stdin);
+        printf("Koncze dzialanie aplikacji");
     }
 }
 
@@ -258,6 +269,7 @@ int main()
         char odpowiedzUzytkownika = '0';
         fflush(stdin);
         scanf(" %[0-9]c", &odpowiedzUzytkownika);
+        fflush(stdin);
         switch (odpowiedzUzytkownika)
         {
         case '1':
