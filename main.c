@@ -1,26 +1,28 @@
 /*
-*Marek Kacprzak, WCY22IY3S1
-*Zajecia: 10.01.2023, rozliczenie: 17.01.2023 23:59
-*Temat: Zadanie 5 Oceny studentow
-*/
+ *Marek Kacprzak, WCY22IY3S1
+ *Zajecia: 10.01.2023, rozliczenie: 17.01.2023 23:59
+ *Temat: Zadanie 5 Oceny studentow
+ */
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
 
-#define liczbaStudentow 20  //stala liczba studentow
-#define liczbaPrzedmiotow 5 //stala liczba przedmiotow
+#define liczbaStudentow 20  // stala liczba studentow
+#define liczbaPrzedmiotow 5 // stala liczba przedmiotow
 #define maksymalnaDlugosc 30
 #define liczbaImionINazwisk 50
 
-struct Student {
+struct Student
+{
     char imie[40];
     char nazwisko[40];
     float oceny[liczbaPrzedmiotow];
 };
 
-int losujProporcje() {
+int losujProporcje()
+{
     int proporcja = rand() % liczbaStudentow;
     return proporcja;
 }
@@ -28,13 +30,14 @@ int losujProporcje() {
 float losujOcene()
 {
     int zmiennaLosujaca = 0;
-    zmiennaLosujaca = rand()%7;
-    float tablicaOcen[7] = {2,2.5,3,3.5,4,4.5,5};
+    zmiennaLosujaca = rand() % 7;
+    float tablicaOcen[7] = {2, 2.5, 3, 3.5, 4, 4.5, 5};
     return tablicaOcen[zmiennaLosujaca];
 }
 
-void losowanieImionINazwisk(int tablicaTymczasowa[]) {
-    for (int i = 0; i < liczbaImionINazwisk; i++) //przypisanie wartosci domyslnych do tablicy
+void losowanieImionINazwisk(int tablicaTymczasowa[])
+{
+    for (int i = 0; i < liczbaImionINazwisk; i++) // przypisanie wartosci domyslnych do tablicy
     {
         tablicaTymczasowa[i] = i;
     }
@@ -42,8 +45,9 @@ void losowanieImionINazwisk(int tablicaTymczasowa[]) {
     int zmiennaLosowaTymczasowa = 0;
     int temp = 0;
 
-    for (int i = 0; i < liczbaImionINazwisk; i++) {
-        zmiennaLosowaTymczasowa = rand() % liczbaImionINazwisk; //rand() % 50
+    for (int i = 0; i < liczbaImionINazwisk; i++)
+    {
+        zmiennaLosowaTymczasowa = rand() % liczbaImionINazwisk; // rand() % 50
         temp = tablicaTymczasowa[i];
         tablicaTymczasowa[i] = tablicaTymczasowa[zmiennaLosowaTymczasowa];
         tablicaTymczasowa[zmiennaLosowaTymczasowa] = temp;
@@ -52,99 +56,119 @@ void losowanieImionINazwisk(int tablicaTymczasowa[]) {
 
 void wygenerowanieStudentow(int proporcja, struct Student strukturaStudentow[], char imionaMeskie[][maksymalnaDlugosc],
                             char nazwiskaMeskie[][maksymalnaDlugosc], char imionaZenskie[][maksymalnaDlugosc],
-                            char nazwiskaZenskie[][maksymalnaDlugosc]) {
+                            char nazwiskaZenskie[][maksymalnaDlugosc])
+{
     int tablicaTymczasowa[liczbaImionINazwisk];
     losowanieImionINazwisk(tablicaTymczasowa);
 
-    for (int i = 0; i < proporcja; i++) {
+    for (int i = 0; i < proporcja; i++)
+    {
         strcpy(strukturaStudentow[i].imie, imionaMeskie[tablicaTymczasowa[i]]);
 
         strcpy(strukturaStudentow[i].nazwisko, nazwiskaMeskie[tablicaTymczasowa[i]]);
 
-        for (int j = 0; j < liczbaPrzedmiotow; j++) {
-            strukturaStudentow[i].oceny[j] = (float) (losujOcene());
+        for (int j = 0; j < liczbaPrzedmiotow; j++)
+        {
+            strukturaStudentow[i].oceny[j] = (float)(losujOcene());
         }
     }
-    for (int i = proporcja; i < liczbaStudentow; i++) {
+    for (int i = proporcja; i < liczbaStudentow; i++)
+    {
         strcpy(strukturaStudentow[i].imie, imionaZenskie[tablicaTymczasowa[i]]);
 
         strcpy(strukturaStudentow[i].nazwisko, nazwiskaZenskie[tablicaTymczasowa[i]]);
 
-        for (int j = 0; j < liczbaPrzedmiotow; j++) {
-            strukturaStudentow[i].oceny[j] = (float) (losujOcene());
+        for (int j = 0; j < liczbaPrzedmiotow; j++)
+        {
+            strukturaStudentow[i].oceny[j] = (float)(losujOcene());
         }
     }
 }
 
-void printStudentsWithGrades(struct Student strukturaStudentow[], char przedmioty[][maksymalnaDlugosc]) {
-    for (int i = 0; i < liczbaStudentow; i++) {
+void printStudentsWithGrades(struct Student strukturaStudentow[], char przedmioty[][maksymalnaDlugosc])
+{
+    for (int i = 0; i < liczbaStudentow; i++)
+    {
         printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", i, strukturaStudentow[i].imie,
                strukturaStudentow[i].nazwisko);
-        for (int j = 0; j < liczbaPrzedmiotow; j++) {
+        for (int j = 0; j < liczbaPrzedmiotow; j++)
+        {
             printf("%s:\t %.2f ", przedmioty[j], strukturaStudentow[i].oceny[j]);
         }
         printf("\n");
     }
 }
 
-void printStudentsWithTheirAverages(struct Student strukturaStudentow[]) {
-    for (int i = 0; i < liczbaStudentow; i++) {
+void printStudentsWithTheirAverages(struct Student strukturaStudentow[])
+{
+    for (int i = 0; i < liczbaStudentow; i++)
+    {
         float sredniaOcenUcznia = 0;
         printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", i, strukturaStudentow[i].imie,
                strukturaStudentow[i].nazwisko);
-        for (int j = 0; j < liczbaPrzedmiotow; j++) {
+        for (int j = 0; j < liczbaPrzedmiotow; j++)
+        {
             sredniaOcenUcznia += strukturaStudentow[i].oceny[j];
         }
-        sredniaOcenUcznia=sredniaOcenUcznia/liczbaPrzedmiotow;
+        sredniaOcenUcznia = sredniaOcenUcznia / liczbaPrzedmiotow;
         printf("Srednia ucznia: %.2f", sredniaOcenUcznia);
         printf("\n");
     }
 }
 
-void printStudent(struct Student strukturaStudentow[], char przedmioty[][maksymalnaDlugosc]) {
+void printStudent(struct Student strukturaStudentow[], char przedmioty[][maksymalnaDlugosc])
+{
     printf("Podaj numer studenta: ");
     char c[2];
-    scanf(" %s", c);
+    scanf(" %s", &c);
     int tempNumer = atoi(c);
     float sredniaOcenUcznia = 0;
-    for (int i = 0; i < liczbaPrzedmiotow; i++) {
+    for (int i = 0; i < liczbaPrzedmiotow; i++)
+    {
         sredniaOcenUcznia += strukturaStudentow[i].oceny[i];
     }
-    sredniaOcenUcznia=sredniaOcenUcznia/liczbaPrzedmiotow;
+    sredniaOcenUcznia = sredniaOcenUcznia / liczbaPrzedmiotow;
     printf("%i: Imie i nazwisko: %-15.15s %-15.15s Oceny z przedmiotow: ", tempNumer,
            strukturaStudentow[tempNumer].imie, strukturaStudentow[tempNumer].nazwisko);
-    for (int j = 0; j < liczbaPrzedmiotow; j++) {
+    for (int j = 0; j < liczbaPrzedmiotow; j++)
+    {
         printf("%s:\t %.2f ", przedmioty[j], strukturaStudentow[tempNumer].oceny[j]);
     }
     printf("Srednia ucznia: %.2f", sredniaOcenUcznia);
     printf("\n");
 }
 
-void printSredniaGrupy(struct Student strukturaStudentow[]) {
+void printSredniaGrupy(struct Student strukturaStudentow[])
+{
     float sredniaGrupy = 0;
-    for (int i = 0; i < liczbaStudentow; i++) {
-        for (int j = 0; j < liczbaPrzedmiotow; j++) {
+    for (int i = 0; i < liczbaStudentow; i++)
+    {
+        for (int j = 0; j < liczbaPrzedmiotow; j++)
+        {
             sredniaGrupy += strukturaStudentow[i].oceny[j];
         }
     }
-    sredniaGrupy = sredniaGrupy/(liczbaStudentow*liczbaPrzedmiotow);
+    sredniaGrupy = sredniaGrupy / (liczbaStudentow * liczbaPrzedmiotow);
     printf("Srednia calej grupy to: %.2f", sredniaGrupy);
 }
 
-void printSredniaPrzemiotu(struct Student strukturaStudentow[], char przedmioty[][maksymalnaDlugosc]) {
+void printSredniaPrzemiotu(struct Student strukturaStudentow[], char przedmioty[][maksymalnaDlugosc])
+{
     printf("Podaj numer  przedmiotu: ");
-    for (int i = 0; i < liczbaPrzedmiotow; i++) {
+    for (int i = 0; i < liczbaPrzedmiotow; i++)
+    {
         printf("%i: %s", i, przedmioty[i]);
     }
 
     char c[2];
-    scanf(" %s", c);
+    scanf(" %s", &c);
     int tempNumer = atoi(c);
     float sredniaZPrzedmiotu = 0;
-    for (int i = 0; i < liczbaStudentow; i++) {
+    for (int i = 0; i < liczbaStudentow; i++)
+    {
         sredniaZPrzedmiotu += strukturaStudentow[i].oceny[tempNumer];
     }
-    sredniaZPrzedmiotu=sredniaZPrzedmiotu/(liczbaStudentow*liczbaStudentow);
+    sredniaZPrzedmiotu = sredniaZPrzedmiotu / (liczbaStudentow * liczbaStudentow);
     printf("Srednia z przedmiotu: %s grupy to: %.2f", przedmioty[tempNumer], sredniaZPrzedmiotu);
 }
 
@@ -153,8 +177,8 @@ void czyKontynuowacDzialanieProgramu(int czyKontynuowanie)
     printf("\nCzy chcesz kontynuowac (t/n)?\n");
     char odpUzytkownika;
     fflush(stdin);
-    scanf(" %c", odpUzytkownika);
-    if(odpUzytkownika=='t' || odpUzytkownika=='T')
+    scanf(" %c", &odpUzytkownika);
+    if (odpUzytkownika == 't' || odpUzytkownika == 'T')
     {
         czyKontynuowanie = 0;
     }
@@ -164,7 +188,8 @@ void czyKontynuowacDzialanieProgramu(int czyKontynuowanie)
     }
 }
 
-int main() {
+int main()
+{
     srand(time(NULL));
 
     char imionaMeskie[][maksymalnaDlugosc] = {"Adam", "Aleksander", "Andrzej", "Antoni", "Bartlomiej", "Bogdan",
@@ -206,11 +231,11 @@ int main() {
     char przedmioty[][maksymalnaDlugosc] = {"Matematyka 1", "Matematyka 2", "J. angielski", "Informatyka",
                                             "Etyka Zawodowa"};
 
-    struct Student strukturaStudentow[20]; //zainicjowanie listy struktur o typie Student
+    struct Student strukturaStudentow[20]; // zainicjowanie listy struktur o typie Student
 
     int proporcja = losujProporcje();
 
-    wygenerowanieStudentow(proporcja,strukturaStudentow,imionaMeskie,nazwiskaMeskie,imionaZenskie, nazwiskaZenskie);
+    wygenerowanieStudentow(proporcja, strukturaStudentow, imionaMeskie, nazwiskaMeskie, imionaZenskie, nazwiskaZenskie);
 
     int czyKontynuowac = 0;
 
@@ -227,52 +252,51 @@ int main() {
         printf("[0]Konczenie dzialania aplikacji.\n");
         printf("Wybor:\n>");
 
-
         char odpowiedzUzytkownika = '0';
         fflush(stdin);
         scanf(" %c", &odpowiedzUzytkownika);
-        switch (odpowiedzUzytkownika) {
-            case '1':
-                printStudentsWithGrades(strukturaStudentow, przedmioty);
-                czyKontynuowacDzialanieProgramu(czyKontynuowac);
-                break;
+        switch (odpowiedzUzytkownika)
+        {
+        case '1':
+            printStudentsWithGrades(strukturaStudentow, przedmioty);
+            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            break;
 
-            case '2':
+        case '2':
 
-                printStudent(strukturaStudentow, przedmioty);
-                czyKontynuowacDzialanieProgramu(czyKontynuowac);
-                break;
+            printStudent(strukturaStudentow, przedmioty);
+            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            break;
 
-            case '3':
+        case '3':
 
-                printStudentsWithTheirAverages(strukturaStudentow);
-                czyKontynuowacDzialanieProgramu(czyKontynuowac);
-                break;
+            printStudentsWithTheirAverages(strukturaStudentow);
+            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            break;
 
-            case '4':
+        case '4':
 
-                printSredniaGrupy(strukturaStudentow);
-                czyKontynuowacDzialanieProgramu(czyKontynuowac);
-                break;
+            printSredniaGrupy(strukturaStudentow);
+            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            break;
 
-            case '5':
+        case '5':
 
-                printSredniaPrzemiotu(strukturaStudentow, przedmioty);
-                czyKontynuowacDzialanieProgramu(czyKontynuowac);
-                break;
+            printSredniaPrzemiotu(strukturaStudentow, przedmioty);
+            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+            break;
 
-            case '6':
+        case '6':
 
-                wygenerowanieStudentow(proporcja, strukturaStudentow, imionaMeskie, nazwiskaMeskie, imionaZenskie,
-                                       nazwiskaZenskie);
-                czyKontynuowacDzialanieProgramu(czyKontynuowac);
-            case '0':
-                printf("Koncze dzialanie aplikacji");
-                return 0;
+            wygenerowanieStudentow(proporcja, strukturaStudentow, imionaMeskie, nazwiskaMeskie, imionaZenskie,
+                                   nazwiskaZenskie);
+            czyKontynuowacDzialanieProgramu(czyKontynuowac);
+        case '0':
+            printf("Koncze dzialanie aplikacji");
+            return 0;
 
-            default:
-                printf("Nie rozpoznano wejscia, sprobuj ponownie");
-
+        default:
+            printf("Nie rozpoznano wejscia, sprobuj ponownie");
         }
     }
 }
